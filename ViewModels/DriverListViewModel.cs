@@ -37,7 +37,7 @@ public class DriverListViewModel : BaseViewModel
     public ObservableCollection<Driver> Drivers { get; }
 
     /// <summary>
-    /// Selected year index in the picker (0 = current year, 1 = last year, etc.)
+    /// Selected year index in the picker (0 = 2024, 1 = 2023, etc.)
     /// </summary>
     public int SelectedYearIndex
     {
@@ -46,9 +46,8 @@ public class DriverListViewModel : BaseViewModel
         {
             if (SetProperty(ref _selectedYearIndex, value))
             {
-                // Calculate the actual year based on index
-                var currentYear = DateTime.UtcNow.Year;
-                SelectedYear = currentYear - value;
+                // Calculate the actual year based on index (2024 - index)
+                SelectedYear = 2024 - value;
             }
         }
     }

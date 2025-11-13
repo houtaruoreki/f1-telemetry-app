@@ -15,13 +15,13 @@ public partial class SessionListPage : ContentPage
         _viewModel = viewModel;
         BindingContext = _viewModel;
 
-        // Populate year picker with last 5 years
-        var currentYear = DateTime.UtcNow.Year;
-        for (int i = 0; i < 5; i++)
+        // Populate year picker with F1 seasons (2024 back to 2018)
+        // OpenF1 API has complete data from 2018 onwards
+        for (int year = 2024; year >= 2018; year--)
         {
-            YearPicker.Items.Add((currentYear - i).ToString());
+            YearPicker.Items.Add(year.ToString());
         }
-        YearPicker.SelectedIndex = 0;
+        YearPicker.SelectedIndex = 0; // Default to 2024
     }
 
     protected override async void OnAppearing()
