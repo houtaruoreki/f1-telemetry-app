@@ -28,13 +28,13 @@
                            FontAttributes="Bold"
                            TextColor="White"
                            HorizontalOptions="Center"
-                           LetterSpacing="2"/>
+                           CharacterSpacing="2"/>
                     <Label Text="LIVE DATA • REAL-TIME ANALYSIS • PERFORMANCE METRICS"
                            FontSize="11"
                            TextColor="White"
                            Opacity="0.9"
                            HorizontalOptions="Center"
-                           LetterSpacing="1"/>
+                           CharacterSpacing="1"/>
                     <BoxView HeightRequest="2"
                              WidthRequest="60"
                              BackgroundColor="White"
@@ -66,7 +66,7 @@
                                    FontSize="18"
                                    FontAttributes="Bold"
                                    TextColor="{StaticResource F1Red}"
-                                   LetterSpacing="0.5"/>
+                                   CharacterSpacing="0.5"/>
                             <Label Text="Learn about Formula One racing and telemetry data"
                                    FontSize="13"
                                    TextColor="{StaticResource F1Silver}"
@@ -107,7 +107,7 @@
                                    FontSize="18"
                                    FontAttributes="Bold"
                                    TextColor="White"
-                                   LetterSpacing="0.5"/>
+                                   CharacterSpacing="0.5"/>
                             <Label Text="Browse races, qualifying, and practice sessions"
                                    FontSize="13"
                                    TextColor="{StaticResource F1Silver}"
@@ -149,7 +149,7 @@
                                    FontSize="18"
                                    FontAttributes="Bold"
                                    TextColor="White"
-                                   LetterSpacing="0.5"/>
+                                   CharacterSpacing="0.5"/>
                             <Label Text="View driver profiles and performance statistics"
                                    FontSize="13"
                                    TextColor="{StaticResource F1Silver}"
@@ -191,7 +191,7 @@
                                    FontSize="18"
                                    FontAttributes="Bold"
                                    TextColor="White"
-                                   LetterSpacing="0.5"/>
+                                   CharacterSpacing="0.5"/>
                             <Label Text="Configure app preferences and options"
                                    FontSize="13"
                                    TextColor="{StaticResource F1Silver}"

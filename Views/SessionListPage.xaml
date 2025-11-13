@@ -23,7 +23,7 @@
                        FontSize="14"
                        FontAttributes="Bold"
                        TextColor="{StaticResource F1Silver}"
-                       LetterSpacing="0.5"/>
+                       CharacterSpacing="0.5"/>
 
                 <Frame Grid.Column="1"
                        Padding="8,0"
@@ -99,7 +99,7 @@
                                    FontSize="18"
                                    FontAttributes="Bold"
                                    TextColor="White"
-                                   LetterSpacing="0.3"/>
+                                   CharacterSpacing="0.3"/>
 
                             <!-- Status Badge -->
                             <Frame Grid.Row="0"
@@ -113,7 +113,7 @@
                                        FontSize="10"
                                        TextColor="{StaticResource F1Silver}"
                                        FontAttributes="Bold"
-                                       LetterSpacing="0.5"/>
+                                       CharacterSpacing="0.5"/>
                             </Frame>
 
                             <!-- Location -->
@@ -189,7 +189,7 @@
                            FontAttributes="Bold"
                            HorizontalOptions="Center"
                            TextColor="{StaticResource F1Silver}"
-                           LetterSpacing="0.5"/>
+                           CharacterSpacing="0.5"/>
                     <Label Text="{Binding ErrorMessage}"
                            FontSize="13"
                            HorizontalOptions="Center"
@@ -219,7 +219,7 @@
                        TextColor="{StaticResource F1Silver}"
                        FontSize="12"
                        FontAttributes="Bold"
-                       LetterSpacing="1"
+                       CharacterSpacing="1"
                        HorizontalOptions="Center"/>
             </VerticalStackLayout>
         </Frame>
