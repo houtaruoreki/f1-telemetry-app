@@ -15,22 +15,47 @@ public class DriverListViewModel : BaseViewModel
     private readonly IOpenF1ApiService _apiService;
     private readonly ICacheService _cacheService;
     private int _selectedYear;
+    private int _selectedYearIndex;
 
     public DriverListViewModel(IOpenF1ApiService apiService, ICacheService cacheService)
     {
         _apiService = apiService;
         _cacheService = cacheService;
         _selectedYear = Constants.Settings.DefaultYear;
+        _selectedYearIndex = 0; // Default to current year
 
         Title = "Drivers";
         Drivers = new ObservableCollection<Driver>();
 
         LoadDriversCommand = new Command(async () => await LoadDriversAsync());
         RefreshCommand = new Command(async () => await RefreshDriversAsync());
+
+        // Auto-load drivers on startup
+        _ = LoadDriversAsync();
     }
 
     public ObservableCollection<Driver> Drivers { get; }
 
+    /// <summary>
+    /// Selected year index in the picker (0 = current year, 1 = last year, etc.)
+    /// </summary>
+    public int SelectedYearIndex
+    {
+        get => _selectedYearIndex;
+        set
+        {
+            if (SetProperty(ref _selectedYearIndex, value))
+            {
+                // Calculate the actual year based on index
+                var currentYear = DateTime.UtcNow.Year;
+                SelectedYear = currentYear - value;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Currently selected year for filtering drivers
+    /// </summary>
     public int SelectedYear
     {
         get => _selectedYear;

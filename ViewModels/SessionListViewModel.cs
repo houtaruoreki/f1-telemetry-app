@@ -15,12 +15,14 @@ public class SessionListViewModel : BaseViewModel
     private readonly IOpenF1ApiService _apiService;
     private readonly ICacheService _cacheService;
     private int _selectedYear;
+    private int _selectedYearIndex;
 
     public SessionListViewModel(IOpenF1ApiService apiService, ICacheService cacheService)
     {
         _apiService = apiService;
         _cacheService = cacheService;
         _selectedYear = Constants.Settings.DefaultYear;
+        _selectedYearIndex = 0; // Default to current year
 
         Title = "Sessions";
         Sessions = new ObservableCollection<Session>();
@@ -28,10 +30,33 @@ public class SessionListViewModel : BaseViewModel
         LoadSessionsCommand = new Command(async () => await LoadSessionsAsync());
         RefreshCommand = new Command(async () => await RefreshSessionsAsync());
         SessionSelectedCommand = new Command<Session>(async (session) => await OnSessionSelected(session));
+
+        // Auto-load sessions on startup
+        _ = LoadSessionsAsync();
     }
 
     public ObservableCollection<Session> Sessions { get; }
 
+    /// <summary>
+    /// Selected year index in the picker (0 = current year, 1 = last year, etc.)
+    /// </summary>
+    public int SelectedYearIndex
+    {
+        get => _selectedYearIndex;
+        set
+        {
+            if (SetProperty(ref _selectedYearIndex, value))
+            {
+                // Calculate the actual year based on index
+                var currentYear = DateTime.UtcNow.Year;
+                SelectedYear = currentYear - value;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Currently selected year for filtering sessions
+    /// </summary>
     public int SelectedYear
     {
         get => _selectedYear;

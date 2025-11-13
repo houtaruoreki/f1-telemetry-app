@@ -31,18 +31,29 @@ public class OpenF1ApiService : IOpenF1ApiService
     {
         try
         {
+            var url = $"sessions?year={year}";
+            Console.WriteLine($"[API] Fetching sessions from: {_httpClient.BaseAddress}{url}");
+
             var response = await _httpClient.GetFromJsonAsync<List<Session>>(
-                $"sessions?year={year}",
+                url,
                 _jsonOptions,
                 ct
             );
+
+            Console.WriteLine($"[API] Received {response?.Count ?? 0} sessions");
             return response ?? new List<Session>();
+        }
+        catch (HttpRequestException ex)
+        {
+            Console.WriteLine($"[API] Network error fetching sessions: {ex.Message}");
+            Console.WriteLine($"[API] Inner exception: {ex.InnerException?.Message}");
+            throw new Exception($"Network error: {ex.Message}. Check internet connection.", ex);
         }
         catch (Exception ex)
         {
-            // Log error (logging infrastructure to be added later)
-            Console.WriteLine($"Error fetching sessions: {ex.Message}");
-            return new List<Session>();
+            Console.WriteLine($"[API] Error fetching sessions: {ex.GetType().Name} - {ex.Message}");
+            Console.WriteLine($"[API] Stack trace: {ex.StackTrace}");
+            throw;
         }
     }
 
