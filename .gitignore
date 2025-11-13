@@ -1,0 +1,89 @@
+# .NET and Visual Studio
+*.suo
+*.user
+*.sln.docstates
+*.userprefs
+.vs/
+bin/
+obj/
+*.exe
+*.dll
+*.pdb
+*.cache
+*.log
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Aa]rm/
+[Aa]rm64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# NuGet Packages
+*.nupkg
+*.snupkg
+**/packages/*
+!**/packages/build/
+*.nuget.props
+*.nuget.targets
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# MAUI specific
+**/Resources/Raw/**/*.jpg
+**/Resources/Raw/**/*.png
+**/Resources/Raw/**/*.json
+
+# IDE specific
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Visual Studio cache/options directory
+.vs/
+
+# Rider
+.idea/
+*.sln.iml
+
+# macOS
+.DS_Store
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Test Coverage
+coverage/
+*.coverage
+*.coveragexml
+
+# Local configuration (API keys, etc.)
+appsettings.local.json
+secrets.json
+
+# SQLite databases (optional - uncomment if you don't want to track local DBs)
+# *.db
+# *.db-shm
+# *.db-wal
