@@ -30,6 +30,7 @@ public static class MauiProgram
 
 		// Register ViewModels
 		builder.Services.AddTransient<MainViewModel>();
+		builder.Services.AddTransient<IntroViewModel>();
 		builder.Services.AddTransient<SessionListViewModel>();
 		builder.Services.AddTransient<SessionDetailViewModel>();
 		builder.Services.AddTransient<DriverListViewModel>();
@@ -37,6 +38,7 @@ public static class MauiProgram
 
 		// Register Views/Pages
 		builder.Services.AddTransient<MainPage>();
+		builder.Services.AddTransient<IntroPage>();
 		builder.Services.AddTransient<SessionListPage>();
 		builder.Services.AddTransient<SessionDetailPage>();
 		builder.Services.AddTransient<DriverListPage>();

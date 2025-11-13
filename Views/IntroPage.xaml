@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:F1TelemetryApp.ViewModels"
+             x:Class="F1TelemetryApp.Views.IntroPage"
+             x:DataType="viewmodels:IntroViewModel"
+             Title="{Binding Title}"
+             BackgroundColor="#F5F5F5">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="15" Spacing="20">
+
+            <!-- Welcome Section -->
+            <Frame Padding="25" CornerRadius="12" HasShadow="True" BackgroundColor="White">
+                <VerticalStackLayout Spacing="15">
+                    <Label Text="🏁 Welcome to F1 Telemetry"
+                           FontSize="26"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"/>
+
+                    <BoxView HeightRequest="2" Color="#3498db" WidthRequest="100" HorizontalOptions="Center"/>
+
+                    <Label FontSize="15" TextColor="#555" LineHeight="1.4">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Your comprehensive companion for exploring Formula One telemetry data. "/>
+                                <Span Text="Dive deep into lap times, sector analysis, speed traces, and driver performance metrics from real F1 sessions." FontAttributes="Bold"/>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- What is Formula One -->
+            <Frame Padding="20" CornerRadius="12" HasShadow="True" BackgroundColor="White">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="🏎️ What is Formula One?"
+                           FontSize="22"
+                           FontAttributes="Bold"/>
+
+                    <BoxView HeightRequest="1" Color="#E0E0E0" Margin="0,5"/>
+
+                    <Label FontSize="14" TextColor="#555" LineHeight="1.4">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Formula One (F1) is the highest class of international racing for open-wheel single-seater formula racing cars. "/>
+                                <Span Text="It's the pinnacle of motorsport technology and driver skill." FontAttributes="Bold"/>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <VerticalStackLayout Spacing="10" Margin="0,10,0,0">
+                        <Label Text="🔹 Key Components:" FontSize="16" FontAttributes="Bold" TextColor="#3498db"/>
+
+                        <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto" ColumnDefinitions="Auto,*" RowSpacing="8">
+                            <Label Grid.Row="0" Grid.Column="0" Text="• " FontSize="16" FontAttributes="Bold" TextColor="#e74c3c"/>
+                            <Label Grid.Row="0" Grid.Column="1" Text="20-24 races per season (Grand Prix)" FontSize="14" TextColor="#555"/>
+
+                            <Label Grid.Row="1" Grid.Column="0" Text="• " FontSize="16" FontAttributes="Bold" TextColor="#e74c3c"/>
+                            <Label Grid.Row="1" Grid.Column="1" Text="10 teams with 2 drivers each" FontSize="14" TextColor="#555"/>
+
+                            <Label Grid.Row="2" Grid.Column="0" Text="• " FontSize="16" FontAttributes="Bold" TextColor="#e74c3c"/>
+                            <Label Grid.Row="2" Grid.Column="1" Text="Practice, Qualifying, and Race sessions" FontSize="14" TextColor="#555"/>
+
+                            <Label Grid.Row="3" Grid.Column="0" Text="• " FontSize="16" FontAttributes="Bold" TextColor="#e74c3c"/>
+                            <Label Grid.Row="3" Grid.Column="1" Text="Speeds exceeding 370 km/h (230 mph)" FontSize="14" TextColor="#555"/>
+
+                            <Label Grid.Row="4" Grid.Column="0" Text="• " FontSize="16" FontAttributes="Bold" TextColor="#e74c3c"/>
+                            <Label Grid.Row="4" Grid.Column="1" Text="Cutting-edge hybrid power units and aerodynamics" FontSize="14" TextColor="#555"/>
+                        </Grid>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- What is Telemetry -->
+            <Frame Padding="20" CornerRadius="12" HasShadow="True" BackgroundColor="White">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="📊 What is Telemetry Data?"
+                           FontSize="22"
+                           FontAttributes="Bold"/>
+
+                    <BoxView HeightRequest="1" Color="#E0E0E0" Margin="0,5"/>
+
+                    <Label FontSize="14" TextColor="#555" LineHeight="1.4">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Telemetry is real-time data transmitted from the race car to the team's engineers. "/>
+                                <Span Text="F1 cars have hundreds of sensors capturing everything from speed and throttle position to tire temperatures and brake pressure." FontAttributes="Bold"/>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <VerticalStackLayout Spacing="10" Margin="0,10,0,0">
+                        <Label Text="📈 Key Telemetry Metrics:" FontSize="16" FontAttributes="Bold" TextColor="#2ecc71"/>
+
+                        <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" ColumnDefinitions="120,*" RowSpacing="10">
+                            <Frame Grid.Row="0" Grid.Column="0" Padding="8,4" CornerRadius="6" HasShadow="False" BackgroundColor="#E3F2FD">
+                                <Label Text="Speed" FontSize="12" FontAttributes="Bold" TextColor="#1976D2"/>
+                            </Frame>
+                            <Label Grid.Row="0" Grid.Column="1" Text="Current velocity in km/h" FontSize="13" TextColor="#555" VerticalOptions="Center" Margin="10,0,0,0"/>
+
+                            <Frame Grid.Row="1" Grid.Column="0" Padding="8,4" CornerRadius="6" HasShadow="False" BackgroundColor="#FFF3E0">
+                                <Label Text="RPM" FontSize="12" FontAttributes="Bold" TextColor="#FF6F00"/>
+                            </Frame>
+                            <Label Grid.Row="1" Grid.Column="1" Text="Engine revolutions per minute" FontSize="13" TextColor="#555" VerticalOptions="Center" Margin="10,0,0,0"/>
+
+                            <Frame Grid.Row="2" Grid.Column="0" Padding="8,4" CornerRadius="6" HasShadow="False" BackgroundColor="#E8F5E9">
+                                <Label Text="Throttle" FontSize="12" FontAttributes="Bold" TextColor="#2E7D32"/>
+                            </Frame>
+                            <Label Grid.Row="2" Grid.Column="1" Text="Accelerator position (0-100%)" FontSize="13" TextColor="#555" VerticalOptions="Center" Margin="10,0,0,0"/>
+
+                            <Frame Grid.Row="3" Grid.Column="0" Padding="8,4" CornerRadius="6" HasShadow="False" BackgroundColor="#FFEBEE">
+                                <Label Text="Brake" FontSize="12" FontAttributes="Bold" TextColor="#C62828"/>
+                            </Frame>
+                            <Label Grid.Row="3" Grid.Column="1" Text="Brake application status" FontSize="13" TextColor="#555" VerticalOptions="Center" Margin="10,0,0,0"/>
+
+                            <Frame Grid.Row="4" Grid.Column="0" Padding="8,4" CornerRadius="6" HasShadow="False" BackgroundColor="#F3E5F5">
+                                <Label Text="Gear" FontSize="12" FontAttributes="Bold" TextColor="#7B1FA2"/>
+                            </Frame>
+                            <Label Grid.Row="4" Grid.Column="1" Text="Current gear (1-8)" FontSize="13" TextColor="#555" VerticalOptions="Center" Margin="10,0,0,0"/>
+
+                            <Frame Grid.Row="5" Grid.Column="0" Padding="8,4" CornerRadius="6" HasShadow="False" BackgroundColor="#E0F2F1">
+                                <Label Text="DRS" FontSize="12" FontAttributes="Bold" TextColor="#00695C"/>
+                            </Frame>
+                            <Label Grid.Row="5" Grid.Column="1" Text="Drag Reduction System status" FontSize="13" TextColor="#555" VerticalOptions="Center" Margin="10,0,0,0"/>
+
+                            <Frame Grid.Row="6" Grid.Column="0" Padding="8,4" CornerRadius="6" HasShadow="False" BackgroundColor="#FFF9C4">
+                                <Label Text="Lap Time" FontSize="12" FontAttributes="Bold" TextColor="#F57F17"/>
+                            </Frame>
+                            <Label Grid.Row="6" Grid.Column="1" Text="Total time to complete a lap" FontSize="13" TextColor="#555" VerticalOptions="Center" Margin="10,0,0,0"/>
+
+                            <Frame Grid.Row="7" Grid.Column="0" Padding="8,4" CornerRadius="6" HasShadow="False" BackgroundColor="#FCE4EC">
+                                <Label Text="Sectors" FontSize="12" FontAttributes="Bold" TextColor="#C2185B"/>
+                            </Frame>
+                            <Label Grid.Row="7" Grid.Column="1" Text="Track divided into 3 mini-sections" FontSize="13" TextColor="#555" VerticalOptions="Center" Margin="10,0,0,0"/>
+                        </Grid>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- How to Use App -->
+            <Frame Padding="20" CornerRadius="12" HasShadow="True" BackgroundColor="White">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="📱 How to Use This App"
+                           FontSize="22"
+                           FontAttributes="Bold"/>
+
+                    <BoxView HeightRequest="1" Color="#E0E0E0" Margin="0,5"/>
+
+                    <VerticalStackLayout Spacing="15">
+                        <!-- Step 1 -->
+                        <Grid ColumnDefinitions="40,*" ColumnSpacing="10">
+                            <Frame Grid.Column="0"
+                                   WidthRequest="36"
+                                   HeightRequest="36"
+                                   CornerRadius="18"
+                                   Padding="0"
+                                   HasShadow="False"
+                                   BackgroundColor="#3498db"
+                                   VerticalOptions="Start">
+                                <Label Text="1"
+                                       FontSize="18"
+                                       FontAttributes="Bold"
+                                       TextColor="White"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center"/>
+                            </Frame>
+                            <VerticalStackLayout Grid.Column="1" Spacing="5">
+                                <Label Text="Browse Sessions" FontSize="16" FontAttributes="Bold" TextColor="#3498db"/>
+                                <Label Text="Navigate to the Sessions tab to view F1 races, qualifying, and practice sessions. Filter by year to explore historical data."
+                                       FontSize="13"
+                                       TextColor="#555"
+                                       LineHeight="1.3"/>
+                            </VerticalStackLayout>
+                        </Grid>
+
+                        <!-- Step 2 -->
+                        <Grid ColumnDefinitions="40,*" ColumnSpacing="10">
+                            <Frame Grid.Column="0"
+                                   WidthRequest="36"
+                                   HeightRequest="36"
+                                   CornerRadius="18"
+                                   Padding="0"
+                                   HasShadow="False"
+                                   BackgroundColor="#2ecc71"
+                                   VerticalOptions="Start">
+                                <Label Text="2"
+                                       FontSize="18"
+                                       FontAttributes="Bold"
+                                       TextColor="White"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center"/>
+                            </Frame>
+                            <VerticalStackLayout Grid.Column="1" Spacing="5">
+                                <Label Text="Select a Session" FontSize="16" FontAttributes="Bold" TextColor="#2ecc71"/>
+                                <Label Text="Tap any session to view detailed information including weather conditions, track details, and the list of participating drivers."
+                                       FontSize="13"
+                                       TextColor="#555"
+                                       LineHeight="1.3"/>
+                            </VerticalStackLayout>
+                        </Grid>
+
+                        <!-- Step 3 -->
+                        <Grid ColumnDefinitions="40,*" ColumnSpacing="10">
+                            <Frame Grid.Column="0"
+                                   WidthRequest="36"
+                                   HeightRequest="36"
+                                   CornerRadius="18"
+                                   Padding="0"
+                                   HasShadow="False"
+                                   BackgroundColor="#e74c3c"
+                                   VerticalOptions="Start">
+                                <Label Text="3"
+                                       FontSize="18"
+                                       FontAttributes="Bold"
+                                       TextColor="White"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center"/>
+                            </Frame>
+                            <VerticalStackLayout Grid.Column="1" Spacing="5">
+                                <Label Text="View Driver Telemetry" FontSize="16" FontAttributes="Bold" TextColor="#e74c3c"/>
+                                <Label Text="Tap on any driver to access their complete telemetry data, including lap-by-lap analysis, speed traces, and sector comparisons."
+                                       FontSize="13"
+                                       TextColor="#555"
+                                       LineHeight="1.3"/>
+                            </VerticalStackLayout>
+                        </Grid>
+
+                        <!-- Step 4 -->
+                        <Grid ColumnDefinitions="40,*" ColumnSpacing="10">
+                            <Frame Grid.Column="0"
+                                   WidthRequest="36"
+                                   HeightRequest="36"
+                                   CornerRadius="18"
+                                   Padding="0"
+                                   HasShadow="False"
+                                   BackgroundColor="#9b59b6"
+                                   VerticalOptions="Start">
+                                <Label Text="4"
+                                       FontSize="18"
+                                       FontAttributes="Bold"
+                                       TextColor="White"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center"/>
+                            </Frame>
+                            <VerticalStackLayout Grid.Column="1" Spacing="5">
+                                <Label Text="Analyze Performance" FontSize="16" FontAttributes="Bold" TextColor="#9b59b6"/>
+                                <Label Text="Study the interactive charts showing lap time progression, sector analysis, and speed profiles. Tap individual laps for detailed telemetry."
+                                       FontSize="13"
+                                       TextColor="#555"
+                                       LineHeight="1.3"/>
+                            </VerticalStackLayout>
+                        </Grid>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Understanding Statistics -->
+            <Frame Padding="20" CornerRadius="12" HasShadow="True" BackgroundColor="White">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="📈 Understanding the Statistics"
+                           FontSize="22"
+                           FontAttributes="Bold"/>
+
+                    <BoxView HeightRequest="1" Color="#E0E0E0" Margin="0,5"/>
+
+                    <VerticalStackLayout Spacing="12">
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="🏁 Lap Time" FontSize="15" FontAttributes="Bold" TextColor="#3498db"/>
+                            <Label FontSize="13" TextColor="#555" LineHeight="1.3">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="The total time taken to complete one full circuit. Format: "/>
+                                        <Span Text="M:SS.mmm " FontAttributes="Bold" TextColor="#e74c3c"/>
+                                        <Span Text="(e.g., 1:32.148 = 1 minute, 32 seconds, 148 milliseconds)"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="📍 Sector Times" FontSize="15" FontAttributes="Bold" TextColor="#2ecc71"/>
+                            <Label FontSize="13" TextColor="#555" LineHeight="1.3">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Each lap is divided into 3 sectors. "/>
+                                        <Span Text="Sector 1 (Blue), Sector 2 (Red), Sector 3 (Green). " FontAttributes="Bold"/>
+                                        <Span Text="Analyzing sectors helps identify where drivers gain or lose time."/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="⭐ Personal Best (PB)" FontSize="15" FontAttributes="Bold" TextColor="#f39c12"/>
+                            <Label FontSize="13" TextColor="#555" LineHeight="1.3">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Indicates the driver's "/>
+                                        <Span Text="fastest lap " FontAttributes="Bold" TextColor="#2ecc71"/>
+                                        <Span Text="during that specific session. Look for the green PB badge."/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="🚀 Speed Trace" FontSize="15" FontAttributes="Bold" TextColor="#e74c3c"/>
+                            <Label FontSize="13" TextColor="#555" LineHeight="1.3">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Shows speed variations throughout a lap. "/>
+                                        <Span Text="Blue = throttle application, Red = braking zones. " FontAttributes="Bold"/>
+                                        <Span Text="Helps visualize racing lines and braking points."/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="🎯 Average vs Fastest" FontSize="15" FontAttributes="Bold" TextColor="#9b59b6"/>
+                            <Label FontSize="13" TextColor="#555" LineHeight="1.3">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Average Lap Time shows consistency. "/>
+                                        <Span Text="Fastest Lap Time shows peak performance. " FontAttributes="Bold"/>
+                                        <Span Text="Smaller gap between them indicates better race pace."/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Pro Tips -->
+            <Frame Padding="20" CornerRadius="12" HasShadow="True" BackgroundColor="#E8F5E9">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="💡 Pro Tips for Analysis"
+                           FontSize="22"
+                           FontAttributes="Bold"
+                           TextColor="#2E7D32"/>
+
+                    <BoxView HeightRequest="1" Color="#81C784" Margin="0,5"/>
+
+                    <VerticalStackLayout Spacing="10">
+                        <Grid ColumnDefinitions="30,*" ColumnSpacing="10">
+                            <Label Grid.Column="0" Text="✓" FontSize="20" FontAttributes="Bold" TextColor="#2ecc71" VerticalOptions="Start"/>
+                            <Label Grid.Column="1"
+                                   Text="Compare sector times across laps to find where the driver improved or struggled"
+                                   FontSize="13"
+                                   TextColor="#2E7D32"
+                                   LineHeight="1.3"/>
+                        </Grid>
+
+                        <Grid ColumnDefinitions="30,*" ColumnSpacing="10">
+                            <Label Grid.Column="0" Text="✓" FontSize="20" FontAttributes="Bold" TextColor="#2ecc71" VerticalOptions="Start"/>
+                            <Label Grid.Column="1"
+                                   Text="Look for lap time progression throughout a session - often drivers get faster as they learn the track"
+                                   FontSize="13"
+                                   TextColor="#2E7D32"
+                                   LineHeight="1.3"/>
+                        </Grid>
+
+                        <Grid ColumnDefinitions="30,*" ColumnSpacing="10">
+                            <Label Grid.Column="0" Text="✓" FontSize="20" FontAttributes="Bold" TextColor="#2ecc71" VerticalOptions="Start"/>
+                            <Label Grid.Column="1"
+                                   Text="Weather conditions significantly impact lap times - check the weather card for context"
+                                   FontSize="13"
+                                   TextColor="#2E7D32"
+                                   LineHeight="1.3"/>
+                        </Grid>
+
+                        <Grid ColumnDefinitions="30,*" ColumnSpacing="10">
+                            <Label Grid.Column="0" Text="✓" FontSize="20" FontAttributes="Bold" TextColor="#2ecc71" VerticalOptions="Start"/>
+                            <Label Grid.Column="1"
+                                   Text="Use the Drivers tab to compare different drivers from recent sessions"
+                                   FontSize="13"
+                                   TextColor="#2E7D32"
+                                   LineHeight="1.3"/>
+                        </Grid>
+
+                        <Grid ColumnDefinitions="30,*" ColumnSpacing="10">
+                            <Label Grid.Column="0" Text="✓" FontSize="20" FontAttributes="Bold" TextColor="#2ecc71" VerticalOptions="Start"/>
+                            <Label Grid.Column="1"
+                                   Text="Speed traces show where drivers brake, accelerate, and lift off - key for understanding racing lines"
+                                   FontSize="13"
+                                   TextColor="#2E7D32"
+                                   LineHeight="1.3"/>
+                        </Grid>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Data Source -->
+            <Frame Padding="15" CornerRadius="10" HasShadow="False" BackgroundColor="#E3F2FD">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="ℹ️ Data Source"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           TextColor="#1976D2"
+                           HorizontalOptions="Center"/>
+                    <Label FontSize="12" TextColor="#1565C0" HorizontalOptions="Center" HorizontalTextAlignment="Center" LineHeight="1.3">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="All telemetry data is provided by "/>
+                                <Span Text="OpenF1.org" FontAttributes="Bold"/>
+                                <Span Text=" - a free, open-source platform for Formula 1 historical data"/>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </VerticalStackLayout>
+            </Frame>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

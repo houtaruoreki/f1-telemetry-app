@@ -14,14 +14,21 @@ public class MainViewModel : BaseViewModel
         Title = "F1 Telemetry";
 
         // Initialize commands
+        NavigateToIntroCommand = new Command(async () => await NavigateToIntro());
         NavigateToSessionsCommand = new Command(async () => await NavigateToSessions());
         NavigateToDriversCommand = new Command(async () => await NavigateToDrivers());
         NavigateToSettingsCommand = new Command(async () => await NavigateToSettings());
     }
 
+    public ICommand NavigateToIntroCommand { get; }
     public ICommand NavigateToSessionsCommand { get; }
     public ICommand NavigateToDriversCommand { get; }
     public ICommand NavigateToSettingsCommand { get; }
+
+    private async Task NavigateToIntro()
+    {
+        await Shell.Current.GoToAsync(Constants.Routes.Intro);
+    }
 
     private async Task NavigateToSessions()
     {

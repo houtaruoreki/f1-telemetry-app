@@ -22,6 +22,21 @@
             </VerticalStackLayout>
 
             <!-- Navigation Cards -->
+            <Frame Padding="20" CornerRadius="10" HasShadow="True" BackgroundColor="#E3F2FD">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding NavigateToIntroCommand}"/>
+                </Frame.GestureRecognizers>
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="📖 Introduction to F1 &amp; Telemetry"
+                           FontSize="20"
+                           FontAttributes="Bold"
+                           TextColor="#1976D2"/>
+                    <Label Text="Learn about Formula One, telemetry data, and how to use this app"
+                           FontSize="14"
+                           TextColor="#1565C0"/>
+                </VerticalStackLayout>
+            </Frame>
+
             <Frame Padding="20" CornerRadius="10" HasShadow="True">
                 <Frame.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding NavigateToSessionsCommand}"/>

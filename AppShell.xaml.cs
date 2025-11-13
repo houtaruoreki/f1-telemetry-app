@@ -13,6 +13,7 @@ public partial class AppShell : Shell
 		InitializeComponent();
 
 		// Register routes for detail pages (not in TabBar)
+		Routing.RegisterRoute(Constants.Routes.Intro, typeof(IntroPage));
 		Routing.RegisterRoute(Constants.Routes.SessionDetail, typeof(SessionDetailPage));
 		Routing.RegisterRoute(Constants.Routes.Telemetry, typeof(TelemetryPage));
 	}
