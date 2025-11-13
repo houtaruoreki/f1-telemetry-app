@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:F1TelemetryApp.ViewModels"
+             xmlns:models="clr-namespace:F1TelemetryApp.Models"
+             x:Class="F1TelemetryApp.Views.SessionDetailPage"
+             x:DataType="viewmodels:SessionDetailViewModel"
+             Title="{Binding Title}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="10" Spacing="15">
+
+            <!-- Session Information -->
+            <Frame Padding="15" CornerRadius="8" HasShadow="True">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Session Information"
+                           FontSize="20"
+                           FontAttributes="Bold"/>
+
+                    <Grid RowDefinitions="Auto,Auto,Auto,Auto" ColumnDefinitions="120,*">
+                        <Label Grid.Row="0" Grid.Column="0" Text="Session:" FontAttributes="Bold"/>
+                        <Label Grid.Row="0" Grid.Column="1" Text="{Binding Session.SessionName}"/>
+
+                        <Label Grid.Row="1" Grid.Column="0" Text="Location:" FontAttributes="Bold"/>
+                        <Label Grid.Row="1" Grid.Column="1" Text="{Binding Session.Location}"/>
+
+                        <Label Grid.Row="2" Grid.Column="0" Text="Date:" FontAttributes="Bold"/>
+                        <Label Grid.Row="2" Grid.Column="1" Text="{Binding Session.FormattedDate}"/>
+
+                        <Label Grid.Row="3" Grid.Column="0" Text="Status:" FontAttributes="Bold"/>
+                        <Label Grid.Row="3" Grid.Column="1" Text="{Binding Session.Status}"/>
+                    </Grid>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Weather Information -->
+            <Frame Padding="15" CornerRadius="8" HasShadow="True" IsVisible="{Binding CurrentWeather, Converter={StaticResource IsNotNullConverter}}">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Weather Conditions"
+                           FontSize="20"
+                           FontAttributes="Bold"/>
+
+                    <Grid RowDefinitions="Auto,Auto,Auto,Auto" ColumnDefinitions="120,*">
+                        <Label Grid.Row="0" Grid.Column="0" Text="Condition:" FontAttributes="Bold"/>
+                        <Label Grid.Row="0" Grid.Column="1" Text="{Binding CurrentWeather.Condition}"/>
+
+                        <Label Grid.Row="1" Grid.Column="0" Text="Air Temp:" FontAttributes="Bold"/>
+                        <Label Grid.Row="1" Grid.Column="1" Text="{Binding CurrentWeather.FormattedAirTemp}"/>
+
+                        <Label Grid.Row="2" Grid.Column="0" Text="Track Temp:" FontAttributes="Bold"/>
+                        <Label Grid.Row="2" Grid.Column="1" Text="{Binding CurrentWeather.FormattedTrackTemp}"/>
+
+                        <Label Grid.Row="3" Grid.Column="0" Text="Humidity:" FontAttributes="Bold"/>
+                        <Label Grid.Row="3" Grid.Column="1" Text="{Binding CurrentWeather.FormattedHumidity}"/>
+                    </Grid>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Drivers List -->
+            <Frame Padding="15" CornerRadius="8" HasShadow="True">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Drivers"
+                           FontSize="20"
+                           FontAttributes="Bold"/>
+
+                    <CollectionView ItemsSource="{Binding Drivers}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="models:Driver">
+                                <Frame Padding="10" Margin="0,5" CornerRadius="5" HasShadow="False" BorderColor="LightGray">
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:SessionDetailViewModel}}, Path=ViewTelemetryCommand}"
+                                            CommandParameter="{Binding .}"/>
+                                    </Frame.GestureRecognizers>
+
+                                    <Grid ColumnDefinitions="40,*,Auto">
+                                        <Label Grid.Column="0"
+                                               Text="{Binding DriverNumber}"
+                                               FontSize="18"
+                                               FontAttributes="Bold"
+                                               VerticalOptions="Center"/>
+
+                                        <VerticalStackLayout Grid.Column="1" Spacing="2">
+                                            <Label Text="{Binding BroadcastName}"
+                                                   FontSize="16"
+                                                   FontAttributes="Bold"/>
+                                            <Label Text="{Binding TeamName}"
+                                                   FontSize="12"
+                                                   TextColor="Gray"/>
+                                        </VerticalStackLayout>
+
+                                        <Label Grid.Column="2"
+                                               Text="View >"
+                                               FontSize="12"
+                                               TextColor="Blue"
+                                               VerticalOptions="Center"/>
+                                    </Grid>
+                                </Frame>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+
+                        <CollectionView.EmptyView>
+                            <Label Text="No drivers found"
+                                   FontSize="14"
+                                   TextColor="Gray"
+                                   HorizontalOptions="Center"
+                                   Margin="0,20"/>
+                        </CollectionView.EmptyView>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Loading Indicator -->
+            <ActivityIndicator IsRunning="{Binding IsBusy}"
+                              IsVisible="{Binding IsBusy}"
+                              Color="Blue"/>
+
+            <!-- Error Message -->
+            <Label Text="{Binding ErrorMessage}"
+                   FontSize="14"
+                   TextColor="Red"
+                   HorizontalOptions="Center"
+                   IsVisible="{Binding HasError}"/>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
