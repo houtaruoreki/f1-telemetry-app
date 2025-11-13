@@ -1,5 +1,7 @@
 namespace F1TelemetryApp.Models;
 
+using System.Text.Json.Serialization;
+
 /// <summary>
 /// Represents a Formula 1 driver in a specific session.
 /// Maps to OpenF1 API /drivers endpoint.
@@ -9,46 +11,55 @@ public class Driver
     /// <summary>
     /// Unique session identifier
     /// </summary>
+    [JsonPropertyName("session_key")]
     public int SessionKey { get; set; }
 
     /// <summary>
     /// Driver's racing number (e.g., 1, 44, 33)
     /// </summary>
+    [JsonPropertyName("driver_number")]
     public int DriverNumber { get; set; }
 
     /// <summary>
     /// Broadcast name (e.g., "L HAMILTON", "M VERSTAPPEN")
     /// </summary>
+    [JsonPropertyName("broadcast_name")]
     public string BroadcastName { get; set; } = string.Empty;
 
     /// <summary>
     /// Full driver name (e.g., "Lewis Hamilton")
     /// </summary>
+    [JsonPropertyName("full_name")]
     public string FullName { get; set; } = string.Empty;
 
     /// <summary>
     /// Three-letter driver code (e.g., "HAM", "VER", "LEC")
     /// </summary>
+    [JsonPropertyName("name_acronym")]
     public string NameAcronym { get; set; } = string.Empty;
 
     /// <summary>
     /// Team/constructor name (e.g., "Mercedes", "Red Bull Racing")
     /// </summary>
+    [JsonPropertyName("team_name")]
     public string TeamName { get; set; } = string.Empty;
 
     /// <summary>
     /// Team color in hexadecimal (e.g., "00D2BE" for Mercedes)
     /// </summary>
+    [JsonPropertyName("team_colour")]
     public string TeamColour { get; set; } = string.Empty;
 
     /// <summary>
     /// Driver's country code (e.g., "GBR", "NED", "MON")
     /// </summary>
+    [JsonPropertyName("country_code")]
     public string CountryCode { get; set; } = string.Empty;
 
     /// <summary>
     /// Headshot image URL (if available)
     /// </summary>
+    [JsonPropertyName("headshot_url")]
     public string? HeadshotUrl { get; set; }
 
     /// <summary>

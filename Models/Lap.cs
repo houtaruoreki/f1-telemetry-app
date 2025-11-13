@@ -1,4 +1,5 @@
 namespace F1TelemetryApp.Models;
+using System.Text.Json.Serialization;
 
 /// <summary>
 /// Represents a single lap with timing information.
@@ -9,41 +10,49 @@ public class Lap
     /// <summary>
     /// Unique session identifier
     /// </summary>
+    [JsonPropertyName("session_key")]
     public int SessionKey { get; set; }
 
     /// <summary>
     /// Driver's racing number
     /// </summary>
+    [JsonPropertyName("driver_number")]
     public int DriverNumber { get; set; }
 
     /// <summary>
     /// Lap number within the session
     /// </summary>
+    [JsonPropertyName("lap_number")]
     public int LapNumber { get; set; }
 
     /// <summary>
     /// Total lap time in seconds (null if lap not completed)
     /// </summary>
+    [JsonPropertyName("lap_duration")]
     public double? LapDuration { get; set; }
 
     /// <summary>
     /// Sector 1 time in seconds
     /// </summary>
+    [JsonPropertyName("duration_sector_1")]
     public double? DurationSector1 { get; set; }
 
     /// <summary>
     /// Sector 2 time in seconds
     /// </summary>
+    [JsonPropertyName("duration_sector_2")]
     public double? DurationSector2 { get; set; }
 
     /// <summary>
     /// Sector 3 time in seconds
     /// </summary>
+    [JsonPropertyName("duration_sector_3")]
     public double? DurationSector3 { get; set; }
 
     /// <summary>
     /// Whether this is a personal best lap for the driver
     /// </summary>
+    [JsonPropertyName("is_pit_out_lap")]
     public bool IsPersonalBest { get; set; }
 
     /// <summary>
@@ -56,6 +65,7 @@ public class Lap
     /// <summary>
     /// Timestamp when lap was completed
     /// </summary>
+    [JsonPropertyName("date_start")]
     public DateTime? DateStart { get; set; }
 
     /// <summary>

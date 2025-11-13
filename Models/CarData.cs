@@ -1,4 +1,5 @@
 namespace F1TelemetryApp.Models;
+using System.Text.Json.Serialization;
 
 /// <summary>
 /// Represents a single telemetry data point for a car.
@@ -10,47 +11,56 @@ public class CarData
     /// <summary>
     /// Unique session identifier
     /// </summary>
+    [JsonPropertyName("session_key")]
     public int SessionKey { get; set; }
 
     /// <summary>
     /// Driver's racing number
     /// </summary>
+    [JsonPropertyName("driver_number")]
     public int DriverNumber { get; set; }
 
     /// <summary>
     /// Timestamp of this telemetry sample
     /// </summary>
+    [JsonPropertyName("date")]
     public DateTime Date { get; set; }
 
     /// <summary>
     /// Speed in km/h
     /// </summary>
+    [JsonPropertyName("speed")]
     public int Speed { get; set; }
 
     /// <summary>
     /// Engine RPM
     /// </summary>
+    [JsonPropertyName("rpm")]
     public int Rpm { get; set; }
 
     /// <summary>
     /// Current gear (0-8, where 0 is neutral/reverse)
     /// </summary>
+    [JsonPropertyName("n_gear")]
     public int NGear { get; set; }
 
     /// <summary>
     /// Throttle position (0-100%)
     /// </summary>
+    [JsonPropertyName("throttle")]
     public int Throttle { get; set; }
 
     /// <summary>
     /// Brake application (true = braking)
     /// </summary>
+    [JsonPropertyName("brake")]
     public bool Brake { get; set; }
 
     /// <summary>
     /// DRS (Drag Reduction System) status
     /// 0 = Off, 1 = Available (not activated), 8 = Activated
     /// </summary>
+    [JsonPropertyName("drs")]
     public int Drs { get; set; }
 
     /// <summary>

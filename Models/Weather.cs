@@ -1,4 +1,5 @@
 namespace F1TelemetryApp.Models;
+using System.Text.Json.Serialization;
 
 /// <summary>
 /// Represents weather conditions at the circuit.
@@ -10,46 +11,55 @@ public class Weather
     /// <summary>
     /// Unique session identifier
     /// </summary>
+    [JsonPropertyName("session_key")]
     public int SessionKey { get; set; }
 
     /// <summary>
     /// Timestamp of weather reading
     /// </summary>
+    [JsonPropertyName("date")]
     public DateTime Date { get; set; }
 
     /// <summary>
     /// Air temperature in Celsius
     /// </summary>
+    [JsonPropertyName("air_temperature")]
     public double AirTemperature { get; set; }
 
     /// <summary>
     /// Track surface temperature in Celsius
     /// </summary>
+    [JsonPropertyName("track_temperature")]
     public double TrackTemperature { get; set; }
 
     /// <summary>
     /// Humidity percentage (0-100)
     /// </summary>
+    [JsonPropertyName("humidity")]
     public int Humidity { get; set; }
 
     /// <summary>
     /// Atmospheric pressure in millibars
     /// </summary>
+    [JsonPropertyName("pressure")]
     public double Pressure { get; set; }
 
     /// <summary>
     /// Rainfall indicator (true if raining)
     /// </summary>
+    [JsonPropertyName("rainfall")]
     public bool Rainfall { get; set; }
 
     /// <summary>
     /// Wind direction in degrees (0-360)
     /// </summary>
+    [JsonPropertyName("wind_direction")]
     public int WindDirection { get; set; }
 
     /// <summary>
     /// Wind speed in m/s
     /// </summary>
+    [JsonPropertyName("wind_speed")]
     public double WindSpeed { get; set; }
 
     /// <summary>

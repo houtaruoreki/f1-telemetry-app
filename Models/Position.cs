@@ -1,4 +1,5 @@
 namespace F1TelemetryApp.Models;
+using System.Text.Json.Serialization;
 
 /// <summary>
 /// Represents a driver's position/standing during a session.
@@ -9,21 +10,25 @@ public class Position
     /// <summary>
     /// Unique session identifier
     /// </summary>
+    [JsonPropertyName("session_key")]
     public int SessionKey { get; set; }
 
     /// <summary>
     /// Driver's racing number
     /// </summary>
+    [JsonPropertyName("driver_number")]
     public int DriverNumber { get; set; }
 
     /// <summary>
     /// Timestamp of position update
     /// </summary>
+    [JsonPropertyName("date")]
     public DateTime Date { get; set; }
 
     /// <summary>
     /// Current position (1 = first place, 20 = last)
     /// </summary>
+    [JsonPropertyName("position")]
     public int PositionValue { get; set; }
 
     /// <summary>
