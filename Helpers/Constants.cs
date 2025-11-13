@@ -58,9 +58,9 @@ public static class Constants
     public static class Settings
     {
         /// <summary>
-        /// Default year for viewing data (current year)
+        /// Default year for viewing data (2024 - most recent complete season)
         /// </summary>
-        public static int DefaultYear => DateTime.UtcNow.Year;
+        public static int DefaultYear => 2024;
 
         /// <summary>
         /// Number of items per page for pagination
