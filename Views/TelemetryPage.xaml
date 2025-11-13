@@ -3,140 +3,237 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodels="clr-namespace:F1TelemetryApp.ViewModels"
              xmlns:models="clr-namespace:F1TelemetryApp.Models"
+             xmlns:microcharts="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"
              x:Class="F1TelemetryApp.Views.TelemetryPage"
              x:DataType="viewmodels:TelemetryViewModel"
-             Title="{Binding Title}">
+             Title="{Binding Title}"
+             BackgroundColor="#F5F5F5">
 
     <ScrollView>
-        <VerticalStackLayout Padding="10" Spacing="15">
+        <VerticalStackLayout Padding="15" Spacing="20">
 
-            <!-- Driver Information -->
-            <Frame Padding="15" CornerRadius="8" HasShadow="True" IsVisible="{Binding Driver, Converter={StaticResource IsNotNullConverter}}">
-                <VerticalStackLayout Spacing="8">
-                    <Label Text="Driver Information"
-                           FontSize="20"
+            <!-- Driver Header Card -->
+            <Frame Padding="20" CornerRadius="12" HasShadow="True" BackgroundColor="White" IsVisible="{Binding Driver, Converter={StaticResource IsNotNullConverter}}">
+                <Grid ColumnDefinitions="60,*" RowDefinitions="Auto,Auto,Auto">
+                    <!-- Driver Number Badge -->
+                    <Frame Grid.Column="0" Grid.RowSpan="3"
+                           WidthRequest="60"
+                           HeightRequest="60"
+                           CornerRadius="30"
+                           Padding="0"
+                           HasShadow="False"
+                           BorderColor="{Binding Driver.TeamColour}"
+                           VerticalOptions="Center"
+                           Margin="0,0,15,0">
+                        <Label Text="{Binding Driver.DriverNumber}"
+                               FontSize="24"
+                               FontAttributes="Bold"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"/>
+                    </Frame>
+
+                    <Label Grid.Column="1" Grid.Row="0"
+                           Text="{Binding Driver.BroadcastName}"
+                           FontSize="24"
                            FontAttributes="Bold"/>
 
-                    <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="120,*">
-                        <Label Grid.Row="0" Grid.Column="0" Text="Name:" FontAttributes="Bold"/>
-                        <Label Grid.Row="0" Grid.Column="1" Text="{Binding Driver.BroadcastName}"/>
+                    <Label Grid.Column="1" Grid.Row="1"
+                           Text="{Binding Driver.TeamName}"
+                           FontSize="16"
+                           TextColor="Gray"/>
 
-                        <Label Grid.Row="1" Grid.Column="0" Text="Team:" FontAttributes="Bold"/>
-                        <Label Grid.Row="1" Grid.Column="1" Text="{Binding Driver.TeamName}"/>
+                    <Label Grid.Column="1" Grid.Row="2"
+                           Text="{Binding Driver.CountryCode}"
+                           FontSize="14"
+                           TextColor="DarkGray"
+                           FontAttributes="Italic"/>
+                </Grid>
+            </Frame>
 
-                        <Label Grid.Row="2" Grid.Column="0" Text="Number:" FontAttributes="Bold"/>
-                        <Label Grid.Row="2" Grid.Column="1" Text="{Binding Driver.DriverNumber}"/>
-                    </Grid>
+            <!-- Performance Statistics -->
+            <Grid ColumnDefinitions="*,*,*" ColumnSpacing="10">
+                <Frame Grid.Column="0" Padding="15" CornerRadius="10" HasShadow="True" BackgroundColor="White">
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="Total Laps" FontSize="12" TextColor="Gray" HorizontalOptions="Center"/>
+                        <Label Text="{Binding TotalLaps}" FontSize="28" FontAttributes="Bold" HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+                </Frame>
+
+                <Frame Grid.Column="1" Padding="15" CornerRadius="10" HasShadow="True" BackgroundColor="White">
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="Fastest Lap" FontSize="12" TextColor="Gray" HorizontalOptions="Center"/>
+                        <Label Text="{Binding FastestLapTime}" FontSize="22" FontAttributes="Bold" HorizontalOptions="Center" TextColor="#2ecc71"/>
+                    </VerticalStackLayout>
+                </Frame>
+
+                <Frame Grid.Column="2" Padding="15" CornerRadius="10" HasShadow="True" BackgroundColor="White">
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="Average" FontSize="12" TextColor="Gray" HorizontalOptions="Center"/>
+                        <Label Text="{Binding AverageLapTime}" FontSize="22" FontAttributes="Bold" HorizontalOptions="Center" TextColor="#3498db"/>
+                    </VerticalStackLayout>
+                </Frame>
+            </Grid>
+
+            <!-- Lap Times Chart -->
+            <Frame Padding="15" CornerRadius="12" HasShadow="True" BackgroundColor="White" IsVisible="{Binding LapTimesChart, Converter={StaticResource IsNotNullConverter}}">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="📊 Lap Times Progression"
+                           FontSize="20"
+                           FontAttributes="Bold"/>
+                    <Label Text="Track your lap times throughout the session"
+                           FontSize="14"
+                           TextColor="Gray"
+                           Margin="0,0,0,10"/>
+
+                    <microcharts:ChartView Chart="{Binding LapTimesChart}"
+                                           HeightRequest="250"/>
                 </VerticalStackLayout>
             </Frame>
 
-            <!-- Laps List -->
-            <Frame Padding="15" CornerRadius="8" HasShadow="True">
+            <!-- Sector Comparison Chart -->
+            <Frame Padding="15" CornerRadius="12" HasShadow="True" BackgroundColor="White" IsVisible="{Binding SectorComparisonChart, Converter={StaticResource IsNotNullConverter}}">
                 <VerticalStackLayout Spacing="10">
-                    <Label Text="Lap Times"
+                    <Label Text="🏁 Average Sector Times"
                            FontSize="20"
                            FontAttributes="Bold"/>
+                    <Label Text="Compare performance across track sectors"
+                           FontSize="14"
+                           TextColor="Gray"
+                           Margin="0,0,0,10"/>
+
+                    <microcharts:ChartView Chart="{Binding SectorComparisonChart}"
+                                           HeightRequest="220"/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Speed Telemetry Chart -->
+            <Frame Padding="15" CornerRadius="12" HasShadow="True" BackgroundColor="White" IsVisible="{Binding SpeedChart, Converter={StaticResource IsNotNullConverter}}">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="🚀 Speed Trace"
+                           FontSize="20"
+                           FontAttributes="Bold"/>
+                    <Label Text="Speed profile for selected lap (Red = Braking)"
+                           FontSize="14"
+                           TextColor="Gray"
+                           Margin="0,0,0,10"/>
+
+                    <microcharts:ChartView Chart="{Binding SpeedChart}"
+                                           HeightRequest="200"/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Lap List (Compact) -->
+            <Frame Padding="15" CornerRadius="12" HasShadow="True" BackgroundColor="White">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="⏱️ Lap Times"
+                           FontSize="20"
+                           FontAttributes="Bold"/>
+                    <Label Text="Tap a lap to view detailed telemetry"
+                           FontSize="14"
+                           TextColor="Gray"
+                           Margin="0,0,0,10"/>
 
                     <CollectionView ItemsSource="{Binding Laps}"
                                     SelectedItem="{Binding SelectedLap}"
                                     SelectionMode="Single"
-                                    MaximumHeightRequest="400">
+                                    MaximumHeightRequest="350">
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="models:Lap">
-                                <Frame Padding="10" Margin="0,5" CornerRadius="5" HasShadow="False" BorderColor="LightGray">
-                                    <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto,Auto">
-
+                                <Frame Padding="12" Margin="0,5" CornerRadius="8" HasShadow="False" BackgroundColor="#F8F9FA">
+                                    <Grid ColumnDefinitions="50,*,Auto" RowDefinitions="Auto,Auto">
                                         <!-- Lap Number -->
-                                        <Label Grid.Column="0" Grid.RowSpan="2"
-                                               Text="{Binding LapNumber, StringFormat='L{0}'}"
-                                               FontSize="18"
-                                               FontAttributes="Bold"
-                                               VerticalOptions="Center"
-                                               Margin="0,0,10,0"/>
+                                        <Frame Grid.Column="0" Grid.RowSpan="2"
+                                               WidthRequest="40"
+                                               HeightRequest="40"
+                                               CornerRadius="20"
+                                               Padding="0"
+                                               HasShadow="False"
+                                               BackgroundColor="#3498db"
+                                               VerticalOptions="Center">
+                                            <Label Text="{Binding LapNumber}"
+                                                   FontSize="16"
+                                                   FontAttributes="Bold"
+                                                   TextColor="White"
+                                                   HorizontalOptions="Center"
+                                                   VerticalOptions="Center"/>
+                                        </Frame>
 
                                         <!-- Lap Time -->
                                         <Label Grid.Column="1" Grid.Row="0"
                                                Text="{Binding FormattedLapTime}"
-                                               FontSize="16"
-                                               FontAttributes="Bold"/>
+                                               FontSize="18"
+                                               FontAttributes="Bold"
+                                               Margin="10,0,0,0"/>
 
                                         <!-- Sector Times -->
-                                        <HorizontalStackLayout Grid.Column="1" Grid.Row="1" Spacing="8">
+                                        <HorizontalStackLayout Grid.Column="1" Grid.Row="1" Spacing="8" Margin="10,3,0,0">
                                             <Label Text="{Binding FormattedSector1, StringFormat='S1: {0}'}"
                                                    FontSize="11"
-                                                   TextColor="Gray"/>
+                                                   TextColor="#3498db"/>
                                             <Label Text="{Binding FormattedSector2, StringFormat='S2: {0}'}"
                                                    FontSize="11"
-                                                   TextColor="Gray"/>
+                                                   TextColor="#e74c3c"/>
                                             <Label Text="{Binding FormattedSector3, StringFormat='S3: {0}'}"
                                                    FontSize="11"
-                                                   TextColor="Gray"/>
+                                                   TextColor="#2ecc71"/>
                                         </HorizontalStackLayout>
 
                                         <!-- Personal Best Badge -->
-                                        <Label Grid.Column="2" Grid.RowSpan="2"
-                                               Text="PB"
-                                               FontSize="12"
-                                               FontAttributes="Bold"
-                                               TextColor="Green"
+                                        <Frame Grid.Column="2" Grid.RowSpan="2"
+                                               Padding="8,4"
+                                               CornerRadius="12"
+                                               HasShadow="False"
+                                               BackgroundColor="#2ecc71"
                                                VerticalOptions="Center"
-                                               IsVisible="{Binding IsPersonalBest}"/>
+                                               IsVisible="{Binding IsPersonalBest}">
+                                            <Label Text="PB"
+                                                   FontSize="11"
+                                                   FontAttributes="Bold"
+                                                   TextColor="White"/>
+                                        </Frame>
                                     </Grid>
                                 </Frame>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
 
                         <CollectionView.EmptyView>
-                            <Label Text="No lap data found"
+                            <Label Text="No lap data available"
                                    FontSize="14"
                                    TextColor="Gray"
                                    HorizontalOptions="Center"
-                                   Margin="0,20"/>
+                                   Margin="0,30"/>
                         </CollectionView.EmptyView>
                     </CollectionView>
                 </VerticalStackLayout>
             </Frame>
 
-            <!-- Car Data Sample -->
-            <Frame Padding="15" CornerRadius="8" HasShadow="True" IsVisible="{Binding CarData.Count}">
-                <VerticalStackLayout Spacing="10">
-                    <Label Text="Telemetry Sample (Selected Lap)"
-                           FontSize="20"
-                           FontAttributes="Bold"/>
-
-                    <CollectionView ItemsSource="{Binding CarData}"
-                                    MaximumHeightRequest="300">
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate x:DataType="models:CarData">
-                                <Grid ColumnDefinitions="*,*,*,*" Padding="5" RowSpacing="5">
-                                    <Label Grid.Column="0" Text="{Binding FormattedSpeed}" FontSize="12"/>
-                                    <Label Grid.Column="1" Text="{Binding Rpm, StringFormat='{0} RPM'}" FontSize="12"/>
-                                    <Label Grid.Column="2" Text="{Binding NGear, StringFormat='G{0}'}" FontSize="12"/>
-                                    <Label Grid.Column="3" Text="{Binding ThrottlePercent}" FontSize="12"/>
-                                </Grid>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
-
-                    <Label Text="Note: Full telemetry visualization will be added in Phase 4"
-                           FontSize="11"
+            <!-- Loading Indicator -->
+            <Frame Padding="30" CornerRadius="12" HasShadow="True" BackgroundColor="White" IsVisible="{Binding IsBusy}">
+                <VerticalStackLayout Spacing="15">
+                    <ActivityIndicator IsRunning="{Binding IsBusy}"
+                                      Color="#3498db"
+                                      WidthRequest="40"
+                                      HeightRequest="40"
+                                      HorizontalOptions="Center"/>
+                    <Label Text="Loading telemetry data..."
+                           FontSize="16"
                            TextColor="Gray"
-                           HorizontalOptions="Center"
-                           FontStyle="Italic"/>
+                           HorizontalOptions="Center"/>
                 </VerticalStackLayout>
             </Frame>
 
-            <!-- Loading Indicator -->
-            <ActivityIndicator IsRunning="{Binding IsBusy}"
-                              IsVisible="{Binding IsBusy}"
-                              Color="Blue"/>
-
             <!-- Error Message -->
-            <Label Text="{Binding ErrorMessage}"
-                   FontSize="14"
-                   TextColor="Red"
-                   HorizontalOptions="Center"
-                   IsVisible="{Binding HasError}"/>
+            <Frame Padding="20" CornerRadius="12" HasShadow="True" BackgroundColor="#FFEBEE" IsVisible="{Binding HasError}">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="⚠️ Error"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           TextColor="#C62828"/>
+                    <Label Text="{Binding ErrorMessage}"
+                           FontSize="14"
+                           TextColor="#C62828"/>
+                </VerticalStackLayout>
+            </Frame>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
