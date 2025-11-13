@@ -396,7 +396,7 @@ public class TelemetryViewModel : BaseViewModel, IQueryAttributable
             BackgroundColor = SKColors.Transparent,
             LabelOrientation = Orientation.Horizontal,
             MinValue = 0,
-            MaxValue = speedEntries.Max(e => e.Value) + 20
+            MaxValue = (speedEntries.Max(e => e.Value) ?? 300) + 20
         };
     }
 }

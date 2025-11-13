@@ -84,7 +84,7 @@
                    FontSize="12"
                    TextColor="Gray"
                    HorizontalOptions="Center"
-                   FontStyle="Italic"
+                   FontAttributes="Italic"
                    Margin="0,30,0,0"/>
         </VerticalStackLayout>
     </ScrollView>
