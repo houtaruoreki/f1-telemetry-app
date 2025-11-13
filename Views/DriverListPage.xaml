@@ -5,74 +5,149 @@
              xmlns:models="clr-namespace:F1TelemetryApp.Models"
              x:Class="F1TelemetryApp.Views.DriverListPage"
              x:DataType="viewmodels:DriverListViewModel"
-             Title="{Binding Title}">
+             Title="{Binding Title}"
+             BackgroundColor="{StaticResource OffBlack}">
 
-    <Grid RowDefinitions="Auto,*" Padding="10">
+    <Grid RowDefinitions="Auto,*">
 
-        <!-- Year Selector and Refresh -->
-        <HorizontalStackLayout Grid.Row="0" Spacing="10" Margin="0,0,0,10">
-            <Label Text="Year:" VerticalOptions="Center" FontSize="16" FontAttributes="Bold"/>
-            <Picker x:Name="YearPicker"
-                    SelectedItem="{Binding SelectedYear}"
-                    WidthRequest="100"
-                    VerticalOptions="Center"/>
-            <Button Text="Load"
-                    Command="{Binding LoadDriversCommand}"
-                    IsEnabled="{Binding IsNotBusy}"
-                    VerticalOptions="Center"/>
-            <Button Text="Refresh"
-                    Command="{Binding RefreshCommand}"
-                    IsEnabled="{Binding IsNotBusy}"
-                    VerticalOptions="Center"/>
-        </HorizontalStackLayout>
+        <!-- Header with Year Selector -->
+        <Frame Grid.Row="0"
+               Margin="0"
+               Padding="16,12"
+               CornerRadius="0"
+               HasShadow="False"
+               BackgroundColor="{StaticResource F1DarkGray}">
+            <Grid ColumnDefinitions="Auto,*,Auto,Auto" ColumnSpacing="10">
+                <Label Text="YEAR:"
+                       VerticalOptions="Center"
+                       FontSize="14"
+                       FontAttributes="Bold"
+                       TextColor="{StaticResource F1Silver}"
+                       LetterSpacing="0.5"/>
+
+                <Frame Grid.Column="1"
+                       Padding="8,0"
+                       CornerRadius="6"
+                       HasShadow="False"
+                       BackgroundColor="{StaticResource Secondary}"
+                       BorderColor="{StaticResource F1Red}">
+                    <Picker x:Name="YearPicker"
+                            SelectedIndex="{Binding SelectedYearIndex}"
+                            TextColor="White"
+                            FontAttributes="Bold"
+                            HorizontalOptions="Fill"/>
+                </Frame>
+
+                <Button Grid.Column="2"
+                        Text="LOAD"
+                        Command="{Binding LoadDriversCommand}"
+                        IsEnabled="{Binding IsNotBusy}"
+                        BackgroundColor="{StaticResource F1Red}"
+                        TextColor="White"
+                        FontAttributes="Bold"
+                        FontSize="12"
+                        Padding="16,8"
+                        CornerRadius="6"/>
+
+                <Button Grid.Column="3"
+                        Text="↻"
+                        Command="{Binding RefreshCommand}"
+                        IsEnabled="{Binding IsNotBusy}"
+                        BackgroundColor="{StaticResource Secondary}"
+                        TextColor="White"
+                        FontSize="18"
+                        FontAttributes="Bold"
+                        Padding="12,8"
+                        CornerRadius="6"/>
+            </Grid>
+        </Frame>
 
         <!-- Drivers List -->
-        <CollectionView Grid.Row="1" ItemsSource="{Binding Drivers}">
+        <CollectionView Grid.Row="1"
+                        ItemsSource="{Binding Drivers}"
+                        SelectionMode="None"
+                        Margin="12,12,12,0">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:Driver">
-                    <Frame Padding="15" Margin="5" CornerRadius="8" HasShadow="True">
-                        <Grid ColumnDefinitions="50,*" RowDefinitions="Auto,Auto,Auto">
+                    <Frame Padding="0"
+                           Margin="0,0,0,12"
+                           CornerRadius="10"
+                           HasShadow="False"
+                           BorderColor="{StaticResource F1DarkGray}"
+                           BackgroundColor="{StaticResource Secondary}">
+                        <Grid Padding="16" ColumnDefinitions="60,*,Auto" RowDefinitions="Auto,Auto,Auto">
 
-                            <!-- Driver Number with Team Color -->
-                            <Frame Grid.Column="0" Grid.RowSpan="3"
-                                   WidthRequest="50"
-                                   HeightRequest="50"
-                                   CornerRadius="25"
+                            <!-- Driver Number Badge -->
+                            <Frame Grid.Column="0"
+                                   Grid.RowSpan="3"
+                                   WidthRequest="56"
+                                   HeightRequest="56"
+                                   CornerRadius="28"
                                    Padding="0"
                                    HasShadow="False"
                                    BorderColor="{Binding TeamColour}"
-                                   VerticalOptions="Center">
+                                   BackgroundColor="{StaticResource F1DarkGray}"
+                                   VerticalOptions="Center"
+                                   Margin="0,0,12,0">
                                 <Label Text="{Binding DriverNumber}"
-                                       FontSize="20"
+                                       FontSize="22"
                                        FontAttributes="Bold"
+                                       TextColor="White"
                                        HorizontalOptions="Center"
                                        VerticalOptions="Center"/>
                             </Frame>
 
-                            <!-- Driver Name -->
-                            <Label Grid.Column="1" Grid.Row="0"
+                            <!-- Broadcast Name -->
+                            <Label Grid.Column="1"
+                                   Grid.Row="0"
                                    Text="{Binding BroadcastName}"
                                    FontSize="18"
                                    FontAttributes="Bold"
-                                   Margin="10,0,0,0"/>
+                                   TextColor="White"
+                                   LetterSpacing="0.3"/>
 
                             <!-- Full Name -->
-                            <Label Grid.Column="1" Grid.Row="1"
+                            <Label Grid.Column="1"
+                                   Grid.Row="1"
                                    Text="{Binding FullName}"
-                                   FontSize="14"
-                                   TextColor="Gray"
-                                   Margin="10,0,0,0"/>
+                                   FontSize="13"
+                                   TextColor="{StaticResource F1Silver}"
+                                   Margin="0,2,0,0"/>
 
-                            <!-- Team Name and Country -->
-                            <HorizontalStackLayout Grid.Column="1" Grid.Row="2" Spacing="10" Margin="10,5,0,0">
-                                <Label Text="{Binding TeamName}"
-                                       FontSize="12"
-                                       TextColor="DarkGray"/>
-                                <Label Text="{Binding CountryCode}"
-                                       FontSize="12"
-                                       TextColor="DarkGray"
-                                       FontAttributes="Italic"/>
+                            <!-- Team and Country -->
+                            <HorizontalStackLayout Grid.Column="1"
+                                                   Grid.Row="2"
+                                                   Spacing="10"
+                                                   Margin="0,6,0,0">
+                                <Frame Padding="8,3"
+                                       CornerRadius="4"
+                                       HasShadow="False"
+                                       BackgroundColor="{StaticResource F1DarkGray}"
+                                       BorderColor="{Binding TeamColour}">
+                                    <Label Text="{Binding TeamName}"
+                                           FontSize="11"
+                                           TextColor="{StaticResource F1Silver}"
+                                           FontAttributes="Bold"/>
+                                </Frame>
+
+                                <Frame Padding="8,3"
+                                       CornerRadius="4"
+                                       HasShadow="False"
+                                       BackgroundColor="{StaticResource F1Black}">
+                                    <Label Text="{Binding CountryCode}"
+                                           FontSize="11"
+                                           TextColor="{StaticResource F1Silver}"
+                                           FontAttributes="Bold"/>
+                                </Frame>
                             </HorizontalStackLayout>
+
+                            <!-- Arrow Indicator -->
+                            <Label Grid.Column="2"
+                                   Grid.RowSpan="3"
+                                   Text="▶"
+                                   FontSize="20"
+                                   TextColor="{StaticResource F1Red}"
+                                   VerticalOptions="Center"/>
                         </Grid>
                     </Frame>
                 </DataTemplate>
@@ -81,25 +156,49 @@
             <!-- Empty View -->
             <CollectionView.EmptyView>
                 <StackLayout Padding="20" VerticalOptions="Center">
-                    <Label Text="No drivers found"
+                    <Label Text="🏎️"
+                           FontSize="48"
+                           HorizontalOptions="Center"
+                           Opacity="0.3"
+                           Margin="0,0,0,12"/>
+                    <Label Text="NO DRIVERS FOUND"
                            FontSize="16"
+                           FontAttributes="Bold"
                            HorizontalOptions="Center"
-                           TextColor="Gray"/>
+                           TextColor="{StaticResource F1Silver}"
+                           LetterSpacing="0.5"/>
                     <Label Text="{Binding ErrorMessage}"
-                           FontSize="14"
+                           FontSize="13"
                            HorizontalOptions="Center"
-                           TextColor="Red"
-                           IsVisible="{Binding HasError}"/>
+                           TextColor="{StaticResource F1Red}"
+                           IsVisible="{Binding HasError}"
+                           Margin="0,8,0,0"/>
                 </StackLayout>
             </CollectionView.EmptyView>
         </CollectionView>
 
         <!-- Loading Indicator -->
-        <ActivityIndicator Grid.Row="1"
-                          IsRunning="{Binding IsBusy}"
-                          IsVisible="{Binding IsBusy}"
-                          VerticalOptions="Center"
-                          HorizontalOptions="Center"
-                          Color="Blue"/>
+        <Frame Grid.Row="1"
+               IsVisible="{Binding IsBusy}"
+               BackgroundColor="{StaticResource OffBlack}"
+               Opacity="0.9"
+               Padding="0"
+               CornerRadius="0"
+               HasShadow="False">
+            <VerticalStackLayout VerticalOptions="Center"
+                                 HorizontalOptions="Center"
+                                 Spacing="16">
+                <ActivityIndicator IsRunning="{Binding IsBusy}"
+                                   Color="{StaticResource F1Red}"
+                                   HeightRequest="48"
+                                   WidthRequest="48"/>
+                <Label Text="LOADING DRIVERS..."
+                       TextColor="{StaticResource F1Silver}"
+                       FontSize="12"
+                       FontAttributes="Bold"
+                       LetterSpacing="1"
+                       HorizontalOptions="Center"/>
+            </VerticalStackLayout>
+        </Frame>
     </Grid>
 </ContentPage>
