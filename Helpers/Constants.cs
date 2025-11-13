@@ -90,6 +90,7 @@ public static class Constants
         public const string DriverDetail = "driver_detail";
         public const string Telemetry = "telemetry";
         public const string Settings = "settings";
+        public const string Intro = "intro";
     }
 
     /// <summary>
