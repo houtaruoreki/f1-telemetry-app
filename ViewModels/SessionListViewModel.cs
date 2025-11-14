@@ -8,7 +8,7 @@ using F1TelemetryApp.Services;
 
 /// <summary>
 /// ViewModel for displaying a list of F1 sessions.
-/// Allows filtering by year and navigation to session details.
+/// Allows filtering by year and session type, with grouping by Grand Prix.
 /// </summary>
 public class SessionListViewModel : BaseViewModel
 {
@@ -16,26 +16,31 @@ public class SessionListViewModel : BaseViewModel
     private readonly ICacheService _cacheService;
     private int _selectedYear;
     private int _selectedYearIndex;
+    private string _selectedFilter = "All";
+    private List<Session> _allSessions = new();
 
     public SessionListViewModel(IOpenF1ApiService apiService, ICacheService cacheService)
     {
         _apiService = apiService;
         _cacheService = cacheService;
         _selectedYear = Constants.Settings.DefaultYear;
-        _selectedYearIndex = 0; // Default to current year
+        _selectedYearIndex = 0; // Default to 2024
 
         Title = "Sessions";
-        Sessions = new ObservableCollection<Session>();
+        SessionGroups = new ObservableCollection<SessionGroup>();
+        FilterOptions = new ObservableCollection<string> { "All", "Race", "Qualifying", "Practice", "Sprint" };
 
         LoadSessionsCommand = new Command(async () => await LoadSessionsAsync());
         RefreshCommand = new Command(async () => await RefreshSessionsAsync());
         SessionSelectedCommand = new Command<Session>(async (session) => await OnSessionSelected(session));
+        ToggleGroupCommand = new Command<SessionGroup>(ToggleGroup);
 
         // Auto-load sessions on startup
         _ = LoadSessionsAsync();
     }
 
-    public ObservableCollection<Session> Sessions { get; }
+    public ObservableCollection<SessionGroup> SessionGroups { get; }
+    public ObservableCollection<string> FilterOptions { get; }
 
     /// <summary>
     /// Selected year index in the picker (0 = 2024, 1 = 2023, etc.)
@@ -68,9 +73,25 @@ public class SessionListViewModel : BaseViewModel
         }
     }
 
+    /// <summary>
+    /// Currently selected filter (All, Race, Qualifying, etc.)
+    /// </summary>
+    public string SelectedFilter
+    {
+        get => _selectedFilter;
+        set
+        {
+            if (SetProperty(ref _selectedFilter, value))
+            {
+                ApplyFilter();
+            }
+        }
+    }
+
     public ICommand LoadSessionsCommand { get; }
     public ICommand RefreshCommand { get; }
     public ICommand SessionSelectedCommand { get; }
+    public ICommand ToggleGroupCommand { get; }
 
     /// <summary>
     /// Loads sessions for the selected year
@@ -91,7 +112,8 @@ public class SessionListViewModel : BaseViewModel
 
             if (cachedSessions != null)
             {
-                UpdateSessionsList(cachedSessions);
+                _allSessions = cachedSessions;
+                ApplyFilter();
                 return;
             }
 
@@ -102,7 +124,8 @@ public class SessionListViewModel : BaseViewModel
             {
                 // Cache the results
                 _cacheService.Set(cacheKey, sessions, Constants.Cache.SessionCacheDuration);
-                UpdateSessionsList(sessions);
+                _allSessions = sessions;
+                ApplyFilter();
             }
             else
             {
@@ -141,18 +164,77 @@ public class SessionListViewModel : BaseViewModel
     }
 
     /// <summary>
-    /// Updates the observable collection with new sessions
+    /// Toggles the expanded state of a session group
     /// </summary>
-    private void UpdateSessionsList(List<Session> sessions)
+    private void ToggleGroup(SessionGroup? group)
     {
-        Sessions.Clear();
+        if (group == null)
+            return;
 
-        // Sort by date descending (most recent first)
-        var sortedSessions = sessions.OrderByDescending(s => s.DateStart);
+        group.IsExpanded = !group.IsExpanded;
+        OnPropertyChanged(nameof(SessionGroups));
+    }
 
-        foreach (var session in sortedSessions)
+    /// <summary>
+    /// Applies the selected filter and groups sessions
+    /// </summary>
+    private void ApplyFilter()
+    {
+        // Filter sessions based on selected filter
+        var filteredSessions = SelectedFilter == "All"
+            ? _allSessions
+            : _allSessions.Where(s => s.SessionType?.Contains(SelectedFilter, StringComparison.OrdinalIgnoreCase) == true).ToList();
+
+        // Group sessions by meeting
+        var grouped = filteredSessions
+            .OrderByDescending(s => s.DateStart)
+            .GroupBy(s => new
+            {
+                s.MeetingKey,
+                Location = s.Location ?? "Unknown Location",
+                CircuitName = s.CircuitShortName ?? s.CircuitKey ?? "Unknown Circuit",
+                CountryName = s.CountryName ?? s.CountryCode ?? "",
+                s.DateStart
+            })
+            .Select(g =>
+            {
+                var group = new SessionGroup(
+                    g.First().MeetingOfficialName ?? $"{g.Key.CountryName} Grand Prix",
+                    g.Key.Location,
+                    g.Key.CircuitName,
+                    g.Key.DateStart
+                );
+
+                // Add sessions to the group, sorted within each group
+                var sessions = g.OrderBy(s => GetSessionOrder(s.SessionType)).ToList();
+                foreach (var session in sessions)
+                {
+                    group.Add(session);
+                }
+
+                return group;
+            });
+
+        // Update the observable collection
+        SessionGroups.Clear();
+        foreach (var group in grouped)
         {
-            Sessions.Add(session);
+            SessionGroups.Add(group);
         }
+    }
+
+    /// <summary>
+    /// Returns the sort order for session types
+    /// </summary>
+    private static int GetSessionOrder(string? sessionType)
+    {
+        return sessionType?.ToLower() switch
+        {
+            var s when s?.Contains("practice") == true => 1,
+            var s when s?.Contains("qualifying") == true => 2,
+            var s when s?.Contains("sprint") == true => 3,
+            var s when s?.Contains("race") == true => 4,
+            _ => 5
+        };
     }
 }

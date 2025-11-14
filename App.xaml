@@ -13,6 +13,8 @@
 
             <!-- Value Converters -->
             <converters:IsNotNullConverter x:Key="IsNotNullConverter" />
+            <converters:CountryCodeToFlagConverter x:Key="CountryCodeToFlagConverter" />
+            <converters:BoolToExpandIconConverter x:Key="BoolToExpandIconConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

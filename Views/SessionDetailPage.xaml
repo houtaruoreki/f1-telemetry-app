@@ -284,10 +284,16 @@
                                                                  Spacing="3"
                                                                  Margin="12,0,0,0"
                                                                  VerticalOptions="Center">
-                                                <Label Text="{Binding BroadcastName}"
-                                                       FontSize="15"
-                                                       FontAttributes="Bold"
-                                                       TextColor="White"/>
+                                                <HorizontalStackLayout Spacing="6">
+                                                    <Label Text="{Binding BroadcastName}"
+                                                           FontSize="15"
+                                                           FontAttributes="Bold"
+                                                           TextColor="White"
+                                                           VerticalOptions="Center"/>
+                                                    <Label Text="{Binding CountryCode, Converter={StaticResource CountryCodeToFlagConverter}}"
+                                                           FontSize="16"
+                                                           VerticalOptions="Center"/>
+                                                </HorizontalStackLayout>
                                                 <Label Text="{Binding TeamName}"
                                                        FontSize="12"
                                                        TextColor="{StaticResource F1Silver}"/>

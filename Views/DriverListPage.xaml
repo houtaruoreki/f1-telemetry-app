@@ -130,15 +130,9 @@
                                            FontAttributes="Bold"/>
                                 </Frame>
 
-                                <Frame Padding="8,3"
-                                       CornerRadius="4"
-                                       HasShadow="False"
-                                       BackgroundColor="{StaticResource F1Black}">
-                                    <Label Text="{Binding CountryCode}"
-                                           FontSize="11"
-                                           TextColor="{StaticResource F1Silver}"
-                                           FontAttributes="Bold"/>
-                                </Frame>
+                                <Label Text="{Binding CountryCode, Converter={StaticResource CountryCodeToFlagConverter}}"
+                                       FontSize="24"
+                                       VerticalOptions="Center"/>
                             </HorizontalStackLayout>
 
                             <!-- Arrow Indicator -->

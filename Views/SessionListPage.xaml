@@ -10,22 +10,24 @@
 
     <Grid RowDefinitions="Auto,*">
 
-        <!-- Header with Year Selector -->
+        <!-- Header with Year Selector and Filter -->
         <Frame Grid.Row="0"
                Margin="0"
                Padding="16,12"
                CornerRadius="0"
                HasShadow="False"
                BackgroundColor="{StaticResource F1DarkGray}">
-            <Grid ColumnDefinitions="Auto,*,Auto,Auto" ColumnSpacing="10">
-                <Label Text="YEAR:"
+            <Grid ColumnDefinitions="Auto,*,Auto,Auto" RowDefinitions="Auto,Auto" ColumnSpacing="10" RowSpacing="10">
+                <!-- Year Label and Picker -->
+                <Label Grid.Row="0" Grid.Column="0"
+                       Text="YEAR:"
                        VerticalOptions="Center"
-                       FontSize="14"
+                       FontSize="12"
                        FontAttributes="Bold"
                        TextColor="{StaticResource F1Silver}"
                        LetterSpacing="0.5"/>
 
-                <Frame Grid.Column="1"
+                <Frame Grid.Row="0" Grid.Column="1"
                        Padding="8,0"
                        CornerRadius="6"
                        HasShadow="False"
@@ -38,18 +40,18 @@
                             HorizontalOptions="Fill"/>
                 </Frame>
 
-                <Button Grid.Column="2"
+                <Button Grid.Row="0" Grid.Column="2"
                         Text="LOAD"
                         Command="{Binding LoadSessionsCommand}"
                         IsEnabled="{Binding IsNotBusy}"
                         BackgroundColor="{StaticResource F1Red}"
                         TextColor="White"
                         FontAttributes="Bold"
-                        FontSize="12"
+                        FontSize="11"
                         Padding="16,8"
                         CornerRadius="6"/>
 
-                <Button Grid.Column="3"
+                <Button Grid.Row="0" Grid.Column="3"
                         Text="↻"
                         Command="{Binding RefreshCommand}"
                         IsEnabled="{Binding IsNotBusy}"
@@ -59,126 +61,163 @@
                         FontAttributes="Bold"
                         Padding="12,8"
                         CornerRadius="6"/>
+
+                <!-- Filter Label and Picker -->
+                <Label Grid.Row="1" Grid.Column="0"
+                       Text="FILTER:"
+                       VerticalOptions="Center"
+                       FontSize="12"
+                       FontAttributes="Bold"
+                       TextColor="{StaticResource F1Silver}"
+                       LetterSpacing="0.5"/>
+
+                <Frame Grid.Row="1" Grid.Column="1"
+                       Grid.ColumnSpan="3"
+                       Padding="8,0"
+                       CornerRadius="6"
+                       HasShadow="False"
+                       BackgroundColor="{StaticResource Secondary}"
+                       BorderColor="{StaticResource F1Gold}">
+                    <Picker ItemsSource="{Binding FilterOptions}"
+                            SelectedItem="{Binding SelectedFilter}"
+                            TextColor="White"
+                            FontAttributes="Bold"
+                            HorizontalOptions="Fill"/>
+                </Frame>
             </Grid>
         </Frame>
 
-        <!-- Sessions List -->
-        <CollectionView Grid.Row="1"
-                        ItemsSource="{Binding Sessions}"
-                        SelectionMode="None"
-                        Margin="12,12,12,0">
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="models:Session">
-                    <Frame Padding="0"
-                           Margin="0,0,0,12"
-                           CornerRadius="10"
-                           HasShadow="False"
-                           BorderColor="{StaticResource F1DarkGray}"
-                           BackgroundColor="{StaticResource Secondary}">
-                        <Frame.GestureRecognizers>
-                            <TapGestureRecognizer
-                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:SessionListViewModel}}, Path=SessionSelectedCommand}"
-                                CommandParameter="{Binding .}"/>
-                        </Frame.GestureRecognizers>
-
-                        <Grid Padding="16" RowDefinitions="Auto,Auto,Auto,Auto" ColumnDefinitions="8,*,Auto">
-
-                            <!-- Colored Accent Bar -->
-                            <BoxView Grid.Row="0"
-                                     Grid.RowSpan="4"
-                                     Grid.Column="0"
-                                     BackgroundColor="{StaticResource F1Red}"
-                                     WidthRequest="4"
-                                     CornerRadius="2"
-                                     Margin="0,4,12,4"/>
-
-                            <!-- Session Name -->
-                            <Label Grid.Row="0"
-                                   Grid.Column="1"
-                                   Text="{Binding SessionName}"
-                                   FontSize="18"
-                                   FontAttributes="Bold"
-                                   TextColor="White"
-                                   LetterSpacing="0.3"/>
-
-                            <!-- Status Badge -->
-                            <Frame Grid.Row="0"
-                                   Grid.Column="2"
-                                   Padding="8,4"
-                                   CornerRadius="4"
+        <!-- Grouped Sessions List -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="12,12,12,0"
+                                 BindableLayout.ItemsSource="{Binding SessionGroups}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="models:SessionGroup">
+                        <VerticalStackLayout Margin="0,0,0,12">
+                            <!-- Group Header -->
+                            <Frame Padding="0"
+                                   CornerRadius="10,10,0,0"
                                    HasShadow="False"
-                                   BackgroundColor="{StaticResource F1DarkGray}"
-                                   BorderColor="{StaticResource F1Red}">
-                                <Label Text="{Binding Status}"
-                                       FontSize="10"
-                                       TextColor="{StaticResource F1Silver}"
-                                       FontAttributes="Bold"
-                                       LetterSpacing="0.5"/>
+                                   BorderColor="{StaticResource F1Red}"
+                                   BackgroundColor="{StaticResource F1Red}">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:SessionListViewModel}}, Path=ToggleGroupCommand}"
+                                        CommandParameter="{Binding .}"/>
+                                </Frame.GestureRecognizers>
+
+                                <Grid Padding="16,12" ColumnDefinitions="*,Auto">
+                                    <VerticalStackLayout Spacing="3">
+                                        <Label Text="{Binding MeetingName}"
+                                               FontSize="16"
+                                               FontAttributes="Bold"
+                                               TextColor="White"
+                                               LetterSpacing="0.5"/>
+                                        <HorizontalStackLayout Spacing="10">
+                                            <Label Text="{Binding FormattedDate}"
+                                                   FontSize="11"
+                                                   TextColor="White"
+                                                   Opacity="0.9"/>
+                                            <Label Text="•"
+                                                   FontSize="11"
+                                                   TextColor="White"
+                                                   Opacity="0.9"/>
+                                            <Label Text="{Binding CircuitName}"
+                                                   FontSize="11"
+                                                   TextColor="White"
+                                                   Opacity="0.9"/>
+                                            <Label Text="•"
+                                                   FontSize="11"
+                                                   TextColor="White"
+                                                   Opacity="0.9"/>
+                                            <Label Text="{Binding SessionCount}"
+                                                   FontSize="11"
+                                                   TextColor="White"
+                                                   Opacity="0.9"/>
+                                        </HorizontalStackLayout>
+                                    </VerticalStackLayout>
+
+                                    <Label Grid.Column="1"
+                                           Text="{Binding IsExpanded, Converter={StaticResource BoolToExpandIconConverter}, ConverterParameter='▼,▶'}"
+                                           FontSize="18"
+                                           TextColor="White"
+                                           VerticalOptions="Center"
+                                           Margin="8,0,0,0"/>
+                                </Grid>
                             </Frame>
 
-                            <!-- Location -->
-                            <HorizontalStackLayout Grid.Row="1"
-                                                   Grid.Column="1"
-                                                   Grid.ColumnSpan="2"
-                                                   Spacing="6"
-                                                   Margin="0,6,0,0">
-                                <Label Text="📍"
-                                       FontSize="14"
-                                       VerticalOptions="Center"/>
-                                <Label Text="{Binding Location}"
-                                       FontSize="14"
-                                       TextColor="{StaticResource F1Silver}"
-                                       VerticalOptions="Center"/>
-                            </HorizontalStackLayout>
+                            <!-- Sessions in Group -->
+                            <VerticalStackLayout IsVisible="{Binding IsExpanded}"
+                                                 BindableLayout.ItemsSource="{Binding .}">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate x:DataType="models:Session">
+                                        <Frame Padding="0"
+                                               Margin="0"
+                                               CornerRadius="0"
+                                               HasShadow="False"
+                                               BorderColor="{StaticResource F1DarkGray}"
+                                               BackgroundColor="{StaticResource Secondary}">
+                                            <Frame.GestureRecognizers>
+                                                <TapGestureRecognizer
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:SessionListViewModel}}, Path=SessionSelectedCommand}"
+                                                    CommandParameter="{Binding .}"/>
+                                            </Frame.GestureRecognizers>
 
-                            <!-- Circuit -->
-                            <Label Grid.Row="2"
-                                   Grid.Column="1"
-                                   Grid.ColumnSpan="2"
-                                   Text="{Binding CircuitShortName}"
-                                   FontSize="13"
-                                   TextColor="{StaticResource F1Silver}"
-                                   Opacity="0.8"
-                                   Margin="0,2,0,0"/>
+                                            <Grid Padding="16,12" ColumnDefinitions="8,*,Auto">
+                                                <!-- Colored Accent Bar -->
+                                                <BoxView Grid.Column="0"
+                                                         BackgroundColor="{StaticResource F1Gold}"
+                                                         WidthRequest="4"
+                                                         CornerRadius="2"/>
 
-                            <!-- Date and Time -->
-                            <HorizontalStackLayout Grid.Row="3"
-                                                   Grid.Column="1"
-                                                   Grid.ColumnSpan="2"
-                                                   Spacing="12"
-                                                   Margin="0,8,0,0">
-                                <Frame Padding="6,3"
-                                       CornerRadius="4"
-                                       HasShadow="False"
-                                       BackgroundColor="{StaticResource F1DarkGray}">
-                                    <Label Text="{Binding FormattedDate}"
-                                           FontSize="11"
-                                           TextColor="{StaticResource F1Silver}"/>
-                                </Frame>
+                                                <!-- Session Info -->
+                                                <VerticalStackLayout Grid.Column="1"
+                                                                     Spacing="4"
+                                                                     Margin="12,0,0,0">
+                                                    <Label Text="{Binding SessionName}"
+                                                           FontSize="15"
+                                                           FontAttributes="Bold"
+                                                           TextColor="White"/>
+                                                    <HorizontalStackLayout Spacing="8">
+                                                        <Label Text="{Binding FormattedTime}"
+                                                               FontSize="11"
+                                                               TextColor="{StaticResource F1Silver}"/>
+                                                        <Frame Padding="6,2"
+                                                               CornerRadius="3"
+                                                               HasShadow="False"
+                                                               BackgroundColor="{StaticResource F1DarkGray}"
+                                                               BorderColor="{StaticResource F1Gold}">
+                                                            <Label Text="{Binding Status}"
+                                                                   FontSize="9"
+                                                                   TextColor="{StaticResource F1Silver}"
+                                                                   FontAttributes="Bold"
+                                                                   LetterSpacing="0.5"/>
+                                                        </Frame>
+                                                    </HorizontalStackLayout>
+                                                </VerticalStackLayout>
 
-                                <Frame Padding="6,3"
-                                       CornerRadius="4"
-                                       HasShadow="False"
-                                       BackgroundColor="{StaticResource F1DarkGray}">
-                                    <Label Text="{Binding FormattedTime}"
-                                           FontSize="11"
-                                           TextColor="{StaticResource F1Silver}"/>
-                                </Frame>
+                                                <!-- Arrow -->
+                                                <Label Grid.Column="2"
+                                                       Text="▶"
+                                                       FontSize="14"
+                                                       TextColor="{StaticResource F1Red}"
+                                                       VerticalOptions="Center"/>
+                                            </Grid>
+                                        </Frame>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </VerticalStackLayout>
 
-                                <Label Text="▶"
-                                       FontSize="16"
-                                       TextColor="{StaticResource F1Red}"
-                                       VerticalOptions="Center"
-                                       HorizontalOptions="End"/>
-                            </HorizontalStackLayout>
-                        </Grid>
-                    </Frame>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
+                            <!-- Bottom border for last session in group -->
+                            <BoxView HeightRequest="1"
+                                     BackgroundColor="{StaticResource F1DarkGray}"
+                                     IsVisible="{Binding IsExpanded}"/>
+                        </VerticalStackLayout>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
 
-            <!-- Empty View -->
-            <CollectionView.EmptyView>
-                <StackLayout Padding="20" VerticalOptions="Center">
+                <!-- Empty State -->
+                <VerticalStackLayout Padding="20" IsVisible="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:SessionListViewModel}}, Path=SessionGroups.Count, Converter={StaticResource CountToVisibilityConverter}}">
                     <Label Text="🏁"
                            FontSize="48"
                            HorizontalOptions="Center"
@@ -190,15 +229,9 @@
                            HorizontalOptions="Center"
                            TextColor="{StaticResource F1Silver}"
                            LetterSpacing="0.5"/>
-                    <Label Text="{Binding ErrorMessage}"
-                           FontSize="13"
-                           HorizontalOptions="Center"
-                           TextColor="{StaticResource F1Red}"
-                           IsVisible="{Binding HasError}"
-                           Margin="0,8,0,0"/>
-                </StackLayout>
-            </CollectionView.EmptyView>
-        </CollectionView>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </ScrollView>
 
         <!-- Loading Indicator -->
         <Frame Grid.Row="1"
